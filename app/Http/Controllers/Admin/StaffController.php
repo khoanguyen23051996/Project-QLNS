@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\DB;
 class StaffController extends Controller
 {
     public function index(){
-        $datas = DB::table('staff')->get();
-        return view('admin.pages.staff.index', ['datas' => $datas]);
+        $staffs = DB::table('staff')->get();
+        return view('admin.pages.staff.index', ['staffs' => $staffs]);
     }
 
     public function create(Request $request)

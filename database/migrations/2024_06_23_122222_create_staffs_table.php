@@ -11,14 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('staff', function (Blueprint $table) {
+        Schema::create('staffs', function (Blueprint $table) {
             $table->id();
+            $table->string('code', 10)->nullable()->unique();
             $table->string('name', 255)->nullable();
             $table->string('email', 255)->unique();
             $table->dateTime('dob')->nullable();
             $table->string('address', 255);
             $table->string('phone', 15);
-            $table->boolean('status')->default(0);
+            $table->string('image', 255)->nullable();
+            $table->tinyInteger('status')->default(1);
+            // $table->unsignedBigInteger('department_id');
+            // $table->foreign('department_id')->references('id')->on('department'); 
+            // $table->unsignedBigInteger('position_id');
+            // $table->foreign('position_id')->references('id')->on('position'); 
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('staff');
+        Schema::dropIfExists('staffs');
     }
 };

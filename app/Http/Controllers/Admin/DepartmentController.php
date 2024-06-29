@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DepartmentStoreRequest;
 use App\Http\Requests\DepartmentUpdateRequest;
+use App\Http\Requests\PositionStoreRequest;
 use App\Models\DepartmentModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -32,13 +33,13 @@ class DepartmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(DepartmentStoreRequest $request)
+    public function store(PositionStoreRequest $request)
     {
         $result = DB::table('department')->insert([
             'name' => $request->name,
             'departmentid' => $request->departmentid,
         ]);
-
+        
         $message = $result ? 'Tạo phòng ban thành công' : 'Tạo phòng ban thất bại';
 
         return redirect()->route('admin.department.index')->with('success', $message);

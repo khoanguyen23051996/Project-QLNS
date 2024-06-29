@@ -73,7 +73,7 @@
                   <td>{{ $data->dob }}</td>
                   <td>{{ $data->address }}</td>
                   <td>{{ $data->phone }}</td>
-                  <td>{{ $data->status }}</td>
+                  <td>{{ $data->status ? 'Đang làm việc' : 'Đã nghỉ việc' }}</td>
                   <td>{{ $data->image }}</td>
                   <td>
                     @if($data->trashed())

@@ -6,9 +6,9 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Phòng ban</li>
+        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Chức vụ</li>
       </ol>
-      <h6 class="font-weight-bolder mb-0">Danh sách phòng ban</h6>
+      <h6 class="font-weight-bolder mb-0">Danh sách chức vụ</h6>
     </nav>
     <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
       <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -40,7 +40,7 @@
     <div class="card my-4">
       <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
         <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-          <h6 class="text-white text-capitalize ps-3">Tài khoản nhân viên</h6>
+          <h6 class="text-white text-capitalize ps-3">Danh sách chức vụ</h6>
         </div>
       </div>
       <div class="card-body px-0 pb-2">
@@ -49,30 +49,31 @@
             <thead>
               <tr>
                 <th style="width: 5px">#</th>
+                <th >Mã chức vụ</th>
                 <th >Chức vụ</th>
                 <th >Thao tác</th>
               </tr>
             </thead>
             <tbody>
-              <form action="{{ route('admin.department.create') }}" method="GET">
-                <button id="add-button"  class="btn btn-insert" type="submit" style="background-color: rgb(57, 223, 57)"><i class="fa fa-plus">     Thêm phòng ban</i></button>
+              <form action="{{ route('admin.position.create') }}" method="GET">
+                <button id="add-button"  class="btn btn-insert" type="submit" style="background-color: rgb(57, 223, 57)"><i class="fa fa-plus">     Thêm chức vụ</i></button>
               </form>
               @foreach ($datas as $data)
               <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $data->departmentid }}</td>
+                <td>{{ $data->code }}</td>
                 <td>{{ $data->name }}</td>
                 <td>
                   @if($data->trashed())
-                    <form action="{{ route('admin.department.restore', ['id' => $data->id]) }}" method="post">
+                    <form action="{{ route('admin.position.restore', ['id' => $data->id]) }}" method="post">
                       @csrf
                       <button onclick="return confirm('Bạn muốn khôi phục?')" class="btn btn-success" type="submit" >Restore</button>
                     </form>
                   @endif
-                  <form id="delete-edit-form" action="{{ route('admin.department.destroy', ['departmentid' => $data->id]) }}" method="post">
+                  <form id="delete-edit-form" action="{{ route('admin.position.destroy', ['id' => $data->id]) }}" method="post">
                     @csrf
                     <button id="delete-button" onclick="return confirm('Bạn muốn xoá?')" class="btn btn-danger" type="submit"><i class="fa fa-trash"></i></button>
-                    <a id="edit-button" href="{{ route('admin.department.detail', ['departmentid' => $data->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
+                    <a id="edit-button" href="{{ route('admin.position.detail', ['id' => $data->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
                   </form>
                 </td>
               </tr>

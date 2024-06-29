@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class UserStoreRequest extends FormRequest
 {
@@ -24,7 +25,12 @@ class UserStoreRequest extends FormRequest
         return [
             'name' => 'required|min:5|max:255',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:5|confirmed',
+            'password' => ['required', 'confirmed', Password::min(8)
+                ->letters()
+                ->mixedCase()
+                ->numbers()
+                ->symbols()
+            ],
             // 'password_confirmation' => 'required|min:5|confirmed',
             'position' => 'required',
         ];
@@ -39,9 +45,9 @@ class UserStoreRequest extends FormRequest
             'email.required' => 'Bạn chưa nhập Email...!',
             'email.email' => 'Bạn chưa nhập đúng định dang Email...!',
             'email.unique' => 'Email này đã tồn tại...!',
-            'password.required' => 'Bạn chưa nhập Password...!',
-            'password.min' => 'Password tối thiểu 5 kí tự...!',
-            'password.confirmed' => 'Password và Confirm Password không khớp...!',
+            // 'password.required' => 'Bạn chưa nhập Password...!',
+            // 'password.min' => 'Password tối thiểu 8 kí tự...!',
+            // 'password.confirmed' => 'Password và Confirm Password không khớp...!',
             // 'password_confirmation.required' => 'Bạn chưa nhập xác nhận Password...!',
             // 'password_confirmation.min' => 'Bạn chưa nhập Password!',
             'position.required' => 'Bạn chưa phân quyền...!',

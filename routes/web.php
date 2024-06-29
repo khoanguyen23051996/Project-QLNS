@@ -36,10 +36,11 @@ Route::get('admin/user', [UserController::class, 'index'])
 Route::get('admin/user/create', [UserController::class, 'create'])
 ->name('admin.user.create')->middleware(['authenticate', 'checkuser']);
 Route::get('admin/user/detail/{id}', [UserController::class, 'detail'])->name('admin.user.detail');
-Route::post('admin/user/destroy/{id}', [UserController::class, 'destroy'])->name('admin.user.destroy');
+Route::post('admin/user/destroy/{user}', [UserController::class, 'destroy'])->name('admin.user.destroy');
 // Route::post('admin/user/restore/{id}', [UserController::class, 'restore'])->name('admin.user.restore');
 Route::post('admin/user/store', [UserController::class, 'store'])->name('admin.user.store');
 Route::post('admin/user/update/{id}', [UserController::class, 'update'])->name('admin.user.update');
+Route::post('admin/user/change_status/{user}', [UserController::class, 'changeStatus'])->name('admin.user.change_status');
 //End User
 
 
@@ -48,6 +49,8 @@ Route::get('admin/staff', [StaffController::class, 'index'])
 ->name('admin.staff.index')->middleware(['authenticate', 'checkuser']);
 Route::get('admin/staff/create', [StaffController::class, 'create'])
 ->name('admin.staff.create')->middleware(['authenticate', 'checkuser']);
+Route::get('admin/staff/store', [StaffController::class, 'store'])
+->name('admin.staff.store')->middleware(['authenticate', 'checkuser']);
 
 //Department
 Route::get('admin/department', [DepartmentController::class, 'index'])
@@ -72,4 +75,17 @@ Route::get('admin/attendance', [AttendanceController::class, 'index'])->name('ad
 Route::get('admin/salaries', [SalariesController::class, 'index'])->name('admin.salaries');
 
 
-Route::get('admin/position', [PositionController::class, 'index'])->name('admin.position.index');
+Route::get('admin/position', [PositionController::class, 'index'])
+->name('admin.position.index')->middleware(['authenticate', 'checkuser']);;
+Route::get('admin/position/create', [PositionController::class, 'create'])
+->name('admin.position.create')->middleware(['authenticate', 'checkuser']);
+Route::post('admin/position/store', [PositionController::class, 'store'])
+->name('admin.position.store')->middleware(['authenticate', 'checkuser']);
+Route::post('admin/position/destroy/{id}', [PositionController::class, 'destroy'])
+->name('admin.position.destroy')->middleware(['authenticate', 'checkuser']);
+Route::post('admin/position/restore/{id}', [PositionController::class, 'restore'])
+->name('admin.position.restore')->middleware(['authenticate', 'checkuser']);
+Route::get('admin/position/detail/{id}', [PositionController::class, 'detail'])
+->name('admin.position.detail')->middleware(['authenticate', 'checkuser']);
+Route::post('admin/position/update/{id}', [PositionController::class, 'update'])
+->name('admin.position.update')->middleware(['authenticate', 'checkuser']);

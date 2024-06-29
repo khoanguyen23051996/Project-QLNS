@@ -11,7 +11,7 @@ use App\Http\Requests\LoginRequest;
 class AuthController extends Controller
 {
     public function index(Request $request){
-        if(Auth::id() > 0){
+        if(Auth::check()){
             return redirect()->route('admin.dashboard.index');
         }
         return view('auth.login');

@@ -49,10 +49,10 @@
             <thead>
               <tr>
                 <th style="width: 5px">#</th>
-                <th >MSNV</th>
                 <th >Họ tên</th>
                 <th >Email</th>
                 <th >Chức vụ</th>
+                <th >Trạng thái</th>
                 <th >Thao tác</th>
               </tr>
             </thead>
@@ -60,10 +60,10 @@
               @foreach ($datas as $data)
               <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $data->id }}</td>
                 <td>{{ $data->name }}</td>
                 <td>{{ $data->email }}</td>
                 <td>{{ $data->position ? 'Nhân viên' : 'Quản lí' }}</td>
+                <td>{{ $data->status_text  }}</td>
                 <td>
                   {{-- @if($data->trashed())
                     <form action="{{ route('admin.user.restore', ['id' => $data->id]) }}" method="post">
@@ -71,7 +71,11 @@
                       <button onclick="return confirm('Bạn muốn khôi phục lại tài khoản?')" class="btn btn-success" type="submit">Restore</button>
                     </form>
                   @endif --}}
-                  <form id="delete-edit-form" action="{{ route('admin.user.destroy', ['id' => $data->id]) }}" method="post">
+                  <form method="post" action="{{ route('admin.user.change_status', ['user' => $data->id]) }}">
+                    @csrf
+                    <button id="delete-button" onclick="return confirm('Bạn muốn đổi trạng thái nhân viên này?')" class="btn btn-warning" type="submit"><i class="fa fa-trash"></i></button>
+                  </form>
+                  <form id="delete-edit-form" action="{{ route('admin.user.destroy', ['user' => $data->id]) }}" method="post">
                     @csrf
                     <button id="delete-button" onclick="return confirm('Bạn muốn xoá nhân viên này?')" class="btn btn-danger" type="submit"><i class="fa fa-trash"></i></button>
                     <a id="edit-button" href="{{ route('admin.user.detail', ['id' => $data->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>

@@ -31,41 +31,59 @@ class UserController extends Controller
     }
 
     public function index(Request $request){
-        $datas = DB::table('users')->get();
+        $datas = UserModel::query()->get();
         return view('admin.pages.user.index', ['datas' => $datas]);
     }
 
-    public function destroy(UserModel $id)
+    public function destroy(UserModel $user)
     {
-        $result = $id->delete();
+        $result = $user->delete();
         //Flash message
         $message = $result ? 'Xoá tài khoản thành công' : 'Xoá tài khoản thất bại';
         return redirect()->route('admin.user.index')->with('success', $message);
     }
 
-    // public function restore(Request $request, int $id){
-    //     $id = $request->id;
-    //     //Eloquent
-    //     UserModel::withTrashed()->find($id)->restore();
+    public function restore(Request $request, int $id){
+        $id = $request->id;
+        //Eloquent
+        UserModel::withTrashed()->find($id)->restore();
 
-    //     return redirect()->route('admin.user.index')->with('success', 'Khôi phục tài khoản thành công');
-    // }
+        return redirect()->route('admin.user.index')->with('success', 'Khôi phục tài khoản thành công');
+    }
 
     public function detail(Request $request, $id){
-        return view('admin.pages.user.detail', ['data' => $id]);
+        $user = UserModel::find($id);
+        return view('admin.pages.user.detail', ['user' => $user]);
     }
 
     public function update(UserUpdateRequest $request, $id){
         //Eloquent Update
-        $id = UserModel::find($id);
+        $user = UserModel::find($id);
 
-        //mass assignment
-        $result = $id->update([
+        $userDatas = [
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password,
             'position' => $request->position
-        ]);
+        ];
+
+       if ($request->password) {
+        $userDatas['password'] = Hash::make($request->password);
+       } 
+
+        //mass assignment
+        $result = $user->update($userDatas);
+
+        $message = $result ? 'Cập nhật tài khoản thành công' : 'Cập nhật tài khoản thất bại';
+
+        return redirect()->route('admin.user.index')->with('success', $message);
+    }
+
+    public function changeStatus(UserModel $user){
+        if($user->status == 1){
+            $result = $user->update(['status' => -1]);
+        }else{
+            $result = $user->update(['status' => 1]);
+        }
 
         $message = $result ? 'Cập nhật tài khoản thành công' : 'Cập nhật tài khoản thất bại';
 

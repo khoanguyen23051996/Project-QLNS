@@ -25,6 +25,8 @@ class UserModel extends Model
         'name',
         'email',
         'password',
+        'position',
+        'status',
     ];
 
     public $timestamps = true;
@@ -32,4 +34,8 @@ class UserModel extends Model
     protected $table = 'users';
 
     protected $guarded = [];
+
+    public function getStatusTextAttribute() {
+        return $this->status == 1 ? 'Đang hoạt động' : 'Không hoạt động';
+    }
 }
