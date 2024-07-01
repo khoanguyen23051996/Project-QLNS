@@ -35,6 +35,10 @@
 @endsection
 
 @section('content')
+
+@error('title')
+    <div class="alert alert-danger">{{ $message }}</div>
+@enderror
 <div class="row">
   <div class="col-12">
     <div class="card my-4">
@@ -61,7 +65,7 @@
               @foreach ($datas as $data)
               <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $data->departmentid }}</td>
+                <td>{{ $data->code }}</td>
                 <td>{{ $data->name }}</td>
                 <td>
                   @if($data->trashed())

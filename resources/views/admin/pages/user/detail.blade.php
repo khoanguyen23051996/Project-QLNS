@@ -64,26 +64,37 @@
                   @error('name')
                     <span class="text-danger">{{ $message }}<span>
                   @enderror 
+
                   <div class="input-group input-group-outline mb-3">
                     <input type="text" value="{{ old('email') ?? $user['email'] }}" name="email" class="form-control" id="email" placeholder="Email">
                   </div>
-                  
                   @error('email')
                     <span class="text-danger">{{ $message }}<span>
                   @enderror 
+
                   <div class="input-group input-group-outline mb-3">
                     <input type="password" class="form-control" name="password" placeholder="Password">
                   </div>
                   @error('password')
                     <span class="text-danger">{{ $message }}<span>
                   @enderror 
+
+                  <div class="input-group input-group-outline mb-3">
+                    <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password">
+                  </div>
+                  @error('password_confirmation')
+                    <span class="text-danger">{{ $message }}<span>
+                  @enderror 
+                  
                   <div class="form-group">
-                    <label for="position">Phân quyền</label>
-                    <select name="position" class="input-group input-group-outline mb-3" id="position">
+                    <label for="position">Phân quyền</label>                 
+                     <div class="input-group input-group-outline mb-3">
+                    <select name="position" class="form-control" id="position">
                       <option value="">---Please Select---</option>
                       <option {{ (old('position') ?? $user->position) == '1' ? 'selected' : '' }} value="1">Nhân viên</option>
                       <option {{ (old('position') ?? $user->position) == '0' ? 'selected' : '' }} value="0">Quản lí</option>
                     </select>
+                    </div>
                     @error('position')
                       <span class="text-danger">{{ $message }}<span>
                     @enderror

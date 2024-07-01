@@ -6,6 +6,7 @@
         <span class="ms-1 font-weight-bold text-white">Quản lí nhân sự</span>
       </a>
     </div>
+    @php($user = auth()->user())
     <hr class="horizontal light mt-0 mb-2">
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
@@ -25,6 +26,7 @@
             <span class="nav-link-text ms-1">Danh sách nhân viên</span>
           </a>
         </li>
+        @if ($user->position == 0)
         <li class="nav-item">
           <a class="nav-link text-white " href="{{ route('admin.user.index') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -33,6 +35,7 @@
             <span class="nav-link-text ms-1">Danh sách tài khoản</span>
           </a>
         </li>
+        @endif
         <li class="nav-item">
           <a class="nav-link text-white " href="{{ route('admin.department.index') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -68,6 +71,7 @@
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
         </li>
+        @if ($user->position == 0)
         <li class="nav-item">
           <a class="nav-link text-white " href="{{ route('admin.user.create') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -76,6 +80,7 @@
             <span class="nav-link-text ms-1">Tạo tài khoản</span>
           </a>
         </li>
+        @endif
         <li class="nav-item">
           <a class="nav-link text-white " href="{{ route('auth.logout') }}">
             @csrf

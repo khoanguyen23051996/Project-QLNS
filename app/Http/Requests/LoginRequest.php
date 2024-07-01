@@ -23,7 +23,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'email' => 'required|email',
-            'password' => 'required|min:5',
+            'password' => 'required',
         ];
     }
 
@@ -32,7 +32,6 @@ class LoginRequest extends FormRequest
             'email.required' => 'Bạn chưa nhập Email!',
             'email.email' => 'Bạn chưa nhập đúng định dang Email!',
             'password.required' => 'Bạn chưa nhập Password!',
-            'password.min' => 'Password tối thiểu 5 kí tự!',
         ];
     }
 }

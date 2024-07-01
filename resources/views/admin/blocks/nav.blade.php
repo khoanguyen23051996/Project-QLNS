@@ -23,7 +23,6 @@
           </li>
           <li class="nav-item d-flex align-items-center">
               <i class="fa fa-user me-sm-1"></i>
-            </a>
           </li>
         </ul>
       </div>

@@ -57,11 +57,10 @@
             <div class="card card-plain">
               <div class="card-body">
                 <form role="form" method="POST" action="{{ route('admin.department.store') }}" enctype="multipart/form-data">
-                  @csrf
                   <div class="input-group input-group-outline mb-3">
-                    <input type="text" class="form-control" name="departmentid" placeholder="Mã phòng ban">
+                    <input type="text" class="form-control" name="code" placeholder="Mã phòng ban">
                   </div>
-                  @error('departmentid')
+                  @error('code')
                     <span class="text-danger">{{ $message }}<span>
                   @enderror 
                   <div class="input-group input-group-outline mb-3">

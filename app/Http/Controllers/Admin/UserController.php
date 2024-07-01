@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
-use Illuminate\Support\Str;
 use App\Models\UserModel;
 
 class UserController extends Controller
@@ -18,12 +16,13 @@ class UserController extends Controller
     }
 
     public function store(UserStoreRequest $request){
-        $result = DB::table('users')->insert([
+        $user = new UserModel();
+        $result = $user->fill([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'position' => $request->position,
-        ]);
+        ])->save();
 
         $message = $result ? 'Tạo tài khoản thành công' : 'Tạo tài khoản thất bại';
 
@@ -31,8 +30,7 @@ class UserController extends Controller
     }
 
     public function index(Request $request){
-        $datas = UserModel::query()->get();
-        return view('admin.pages.user.index', ['datas' => $datas]);
+        return view('admin.pages.user.index', UserModel::indexSearch($request->all()));
     }
 
     public function destroy(UserModel $user)
@@ -43,7 +41,7 @@ class UserController extends Controller
         return redirect()->route('admin.user.index')->with('success', $message);
     }
 
-    public function restore(Request $request, int $id){
+    public function restore(Request $request, $id){
         $id = $request->id;
         //Eloquent
         UserModel::withTrashed()->find($id)->restore();
@@ -57,7 +55,6 @@ class UserController extends Controller
     }
 
     public function update(UserUpdateRequest $request, $id){
-        //Eloquent Update
         $user = UserModel::find($id);
 
         $userDatas = [
@@ -66,11 +63,10 @@ class UserController extends Controller
             'position' => $request->position
         ];
 
-       if ($request->password) {
-        $userDatas['password'] = Hash::make($request->password);
-       } 
+        if ($request->password) {
+            $userDatas['password'] = Hash::make($request->password);
+        } 
 
-        //mass assignment
         $result = $user->update($userDatas);
 
         $message = $result ? 'Cập nhật tài khoản thành công' : 'Cập nhật tài khoản thất bại';
@@ -85,8 +81,12 @@ class UserController extends Controller
             $result = $user->update(['status' => 1]);
         }
 
-        $message = $result ? 'Cập nhật tài khoản thành công' : 'Cập nhật tài khoản thất bại';
+        $message = $result ? 'Cập nhật trạng thái thành công' : 'Cập nhật trạng thái thất bại';
 
-        return redirect()->route('admin.user.index')->with('success', $message);
+        return redirect()->route('admin.user.index', ['page' => request()->input('page', 1)])->with('success', $message);
+    }
+
+    public function search(Request $request){ 
+        return view('admin.pages.user.index', UserModel::indexSearch($request->all()));
     }
 }

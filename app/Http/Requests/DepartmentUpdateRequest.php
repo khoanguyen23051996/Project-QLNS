@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use TijsVerkoyen\CssToInlineStyles\Css\Rule\Rule;
 
 class DepartmentUpdateRequest extends FormRequest
 {
@@ -22,8 +23,8 @@ class DepartmentUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:department,name|max:255',
-            'departmentid' => 'required|unique:department,departmentid|max:5|min:3',
+            'name' => 'required|unique:departments,name|max:255',
+            'code' => 'required|unique:departments,code|max:10|min:3',
         ];
     }
 
@@ -33,9 +34,9 @@ class DepartmentUpdateRequest extends FormRequest
             'name.required' => 'Bạn chưa nhập Tên bộ phận...!',
             'name.max' => 'Tên tối đa 255 kí tự...!',
             'name.unique' => 'Tên bộ phận này đã tồn tại...!',
-            'departmentid.unique' => 'Mã bộ phận đã tồn tại...!',
-            'departmentid.max' => 'Mã bộ phận tối đa 5 kí tự...!',
-            'departmentid.min' => 'Mã bộ phận ít nhất 3 kí tự...!',
+            'code.unique' => 'Mã bộ phận đã tồn tại...!',
+            'code.max' => 'Mã bộ phận tối đa 10 kí tự...!',
+            'code.min' => 'Mã bộ phận ít nhất 3 kí tự...!',
         ];
     }
 }

@@ -22,8 +22,8 @@ class DepartmentStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:department,name|max:255',
-            'departmentid' => 'required|unique:department,departmentid|max:5|min:3',
+            'name' => 'required|unique:departments,name|max:255',
+            'code' => 'required|unique:departments,code|max:10|min:3',
         ];
     }
 
@@ -33,10 +33,10 @@ class DepartmentStoreRequest extends FormRequest
             'name.required' => 'Bạn chưa nhập tên bộ phận...!',
             'name.max' => 'Tên tối đa 255 kí tự...!',
             'name.unique' => 'Bộ phận này đã tồn tại...!',
-            'departmentid.required' => 'Bạn chưa nhập mã bộ phận...!',
-            'departmentid.unique' => 'Mã bộ phận này đã tồn tại...!',
-            'departmentid.max' => 'Mã bộ phận tối đa 5 kí tự...!',
-            'departmentid.min' => 'Mã bộ phận ít nhất 3 kí tự...!',
+            'code.required' => 'Bạn chưa nhập mã bộ phận...!',
+            'code.unique' => 'Mã bộ phận này đã tồn tại...!',
+            'code.max' => 'Mã bộ phận tối đa 10 kí tự...!',
+            'code.min' => 'Mã bộ phận ít nhất 3 kí tự...!',
         ];
     }
 }

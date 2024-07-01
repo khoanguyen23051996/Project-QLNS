@@ -24,7 +24,10 @@ class CheckUserAdminMiddleware
         $position = $user->position;
 
         if($position != 0){
-            abort(403);
+
+            $message = $position ? 'Bạn không có quyền truy cập trang này!' : '';
+
+            return redirect()->route('admin.dashboard.index')->with('error', $message);
         }
         
         return $next($request);

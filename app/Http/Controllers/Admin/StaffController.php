@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class StaffController extends Controller
 {
     public function index(){
-        $staffs = DB::table('staff')->get();
+        $staffs = DB::table('staffs')->get();
         return view('admin.pages.staff.index', ['staffs' => $staffs]);
     }
 
@@ -21,7 +21,7 @@ class StaffController extends Controller
 
     public function store(StaffStoreReqest $request)
     {
-        $result = DB::table('staff')->insert([
+        $result = DB::table('staffs')->insert([
             'name' => $request->name,
             'departmentid' => $request->departmentid,
         ]);

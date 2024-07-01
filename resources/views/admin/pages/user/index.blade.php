@@ -44,6 +44,32 @@
         </div>
       </div>
       <div class="card-body px-0 pb-2">
+        <form method="post" action="{{ route('admin.user.search') }}">
+          @csrf
+          <div class="form-group row px-4">
+            <div class="col-sm-12 col-md-6 col-lg-4 form-group">
+              <label for="txt_name">Name</label>
+              <div class="input-group input-group-outline mb-3">
+                <input type="text" name="name" value="{{ $name ?? ''}}" class="form-control" id="txt_name" placeholder="Enter name">
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 form-group">
+              <label for="txt_name">Status</label>             
+              <div class="input-group input-group-outline mb-3">
+                @php($status = $status ?? null)
+              <select name="status" class="form-control" id="position" >
+                <option value="">---Please Select---</option>
+                <option value="1" {{$status == 1 ? 'selected' : ''}}>Đang hoạt động</option>
+                <option value="-1" {{$status == -1 ? 'selected' : ''}}>Không hoạt động</option>
+              </select>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 form-group align-self-end">
+             <button class="btn btn-primary">Search</button>
+            </div>
+          </div>
+        </form>
+        
         <div class="table-responsive p-0">
           <table class="table table-bordered">
             <thead>
@@ -57,28 +83,30 @@
               </tr>
             </thead>
             <tbody>
-              @foreach ($datas as $data)
+              @foreach ($users as $user)
               <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $data->name }}</td>
-                <td>{{ $data->email }}</td>
-                <td>{{ $data->position ? 'Nhân viên' : 'Quản lí' }}</td>
-                <td>{{ $data->status_text  }}</td>
+                <td>{{ $user->name }}</td>
+                <td>{{ $user->email }}</td>
+                <td>{{ $user->position ? 'Nhân viên' : 'Quản lí' }}</td>
+                <td>{{ $user->status_text  }}</td>
                 <td>
-                  {{-- @if($data->trashed())
-                    <form action="{{ route('admin.user.restore', ['id' => $data->id]) }}" method="post">
+                  @if($user->trashed())
+                  {{ dd($user) }}
+                    <form action="{{ route('admin.user.restore', ['id' => $user->id]) }}" method="post">
                       @csrf
                       <button onclick="return confirm('Bạn muốn khôi phục lại tài khoản?')" class="btn btn-success" type="submit">Restore</button>
                     </form>
-                  @endif --}}
-                  <form method="post" action="{{ route('admin.user.change_status', ['user' => $data->id]) }}">
+                  @endif
+                  
+                  <form method="post" action="{{ route('admin.user.change_status', ['user' => $user->id, 'page'=> $page, 'name'=>$name, 'status'=>$status]) }}">
                     @csrf
                     <button id="delete-button" onclick="return confirm('Bạn muốn đổi trạng thái nhân viên này?')" class="btn btn-warning" type="submit"><i class="fa fa-trash"></i></button>
                   </form>
-                  <form id="delete-edit-form" action="{{ route('admin.user.destroy', ['user' => $data->id]) }}" method="post">
+                  <form id="delete-edit-form" action="{{ route('admin.user.destroy', ['user' => $user->id,'page'=> $page, 'name'=>$name, 'status'=>$status]) }}" method="post">
                     @csrf
                     <button id="delete-button" onclick="return confirm('Bạn muốn xoá nhân viên này?')" class="btn btn-danger" type="submit"><i class="fa fa-trash"></i></button>
-                    <a id="edit-button" href="{{ route('admin.user.detail', ['id' => $data->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
+                    <a id="edit-button" href="{{ route('admin.user.detail', ['id' => $user->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
                   </form>
                 </td>
               </tr>
@@ -86,9 +114,34 @@
             </tbody>
           </table>
         </div>
+        <div class="col-12">
+          <div class="btn-group" role="group" aria-label="Basic outlined example">
+            <button type="button" class="btn btn-outline-primary">Trang {{ $page }} của {{$totalPage}}</button>
+            @if ($page >= 3)
+              <a href="{{ route('admin.user.index', ['id' => $user->id, 'page'=> 1, 'name'=>$name, 'status'=>$status]) }}" class="btn btn-outline-primary">Trang đầu</a>
+            @endif
+            @if($page > 1)
+            <a href="{{ route('admin.user.index', ['id' => $user->id, 'page'=> $page - 1, 'name'=>$name, 'status'=>$status]) }}" class="btn btn-outline-primary">{{ $page -1 }}</a>
+            @endif
+            <button type="button" class="btn btn-outline-primary btn-primary">{{ $page }}</button>
+            @if(( $page + 1) <= $totalPage)
+              @for ($i= 1 ; $i <= ($page != 1  || ($page + 1 == $totalPage)? 1 : 2); $i++)
+                <a href="{{ route('admin.user.index', ['id' => $user->id, 'page'=> $i + $page, 'name'=>$name, 'status'=>$status]) }}" class="btn btn-outline-primary">{{ $i + $page }}</a>
+              @endfor
+            @endif
+            @if ($page <= $totalPage - 2 )
+              <a href="{{ route('admin.user.index', ['id' => $user->id, 'page' => $totalPage, 'name' => $name, 'status' => $status]) }}" class="btn btn-outline-primary">Trang cuối</a>
+            @endif
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 @endsection
 
+<script type="text/javascript">
+$(document).ready(function(){
+
+});
+</script>

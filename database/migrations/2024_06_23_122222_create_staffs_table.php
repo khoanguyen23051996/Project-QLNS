@@ -21,10 +21,6 @@ return new class extends Migration
             $table->string('phone', 15);
             $table->string('image', 255)->nullable();
             $table->tinyInteger('status')->default(1);
-            // $table->unsignedBigInteger('department_id');
-            // $table->foreign('department_id')->references('id')->on('department'); 
-            // $table->unsignedBigInteger('position_id');
-            // $table->foreign('position_id')->references('id')->on('position'); 
             $table->timestamps();
             $table->softDeletes();
         });

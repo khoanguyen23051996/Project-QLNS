@@ -59,9 +59,9 @@
                 <form role="form" method="post" action="{{ route('admin.department.update', ['departmentid' => $data->id]) }}" >
                   @csrf
                   <div class="input-group input-group-outline mb-3">
-                    <input type="text" value="{{ old('departmentid') ?? $data['departmentid'] }}" name="departmentid" class="form-control" id="name" placeholder="Mã phòng ban">
+                    <input type="text" value="{{ old('code') ?? $data['code'] }}" name="code" class="form-control" id="name" placeholder="Mã phòng ban">
                   </div>
-                  @error('departmentid')
+                  @error('code')
                     <span class="text-danger">{{ $message }}<span>
                   @enderror 
                   <div class="input-group input-group-outline mb-3">

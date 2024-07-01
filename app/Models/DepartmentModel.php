@@ -10,7 +10,14 @@ class DepartmentModel extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = [
+        'name',
+        'code',
+    ];
+    
     protected $table = 'departments';
+
+    
 
     protected $guarded = [];
 

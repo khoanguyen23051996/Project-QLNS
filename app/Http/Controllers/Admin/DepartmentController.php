@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DepartmentStoreRequest;
 use App\Http\Requests\DepartmentUpdateRequest;
-use App\Http\Requests\PositionStoreRequest;
 use App\Models\DepartmentModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -33,16 +32,19 @@ class DepartmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PositionStoreRequest $request)
+    public function store(DepartmentStoreRequest $request)
     {
-        $result = DB::table('department')->insert([
+
+        $department = new DepartmentModel();
+        $result = $department->fill([
+            'code' => $request->code,
             'name' => $request->name,
-            'departmentid' => $request->departmentid,
-        ]);
+        ])->save();
         
         $message = $result ? 'Tạo phòng ban thành công' : 'Tạo phòng ban thất bại';
 
         return redirect()->route('admin.department.index')->with('success', $message);
+
     }
 
     /**
@@ -56,27 +58,28 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function detail(Request $request, DepartmentModel $departmentid){
+    public function detail(Request $request, DepartmentModel $departmentid ){
         return view('admin.pages.department.detail', ['data' => $departmentid]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(DepartmentUpdateRequest $request, $departmentid)
+    public function update(DepartmentUpdateRequest $request, $id)
     {
-         //Eloquent Update
-         $departmentid = DepartmentModel::find($departmentid);
+        
+        $department = DepartmentModel::find($id);
 
-         //mass assignment
-         $result = $departmentid->update([
-             'departmentid' => $request->departmentid,
-             'name' => $request->name,
-         ]);
+        $departmentDatas = [
+            'name' => $request->name,
+            'code' => $request->code,
+        ];
+
+        $result = $department->update($departmentDatas);
  
-         $message = $result ? 'Cập nhật phòng ban thành công' : 'Cập nhật phòng ban thất bại';
+        $message = $result ? 'Cập nhật phòng ban thành công' : 'Cập nhật phòng ban thất bại';
  
-         return redirect()->route('admin.department.index')->with('success', $message);
+        return redirect()->route('admin.department.index')->with('success', $message);
     }
 
     /**
@@ -85,6 +88,7 @@ class DepartmentController extends Controller
     public function destroy(Request $request, DepartmentModel $departmentid)
     {
         $result = $departmentid->delete();
+
         //Flash message
         $message = $result ? 'Xoá phòng ban thành công' : 'Xoá phòng ban thất bại';
         return redirect()->route('admin.department.index')->with('success', $message);

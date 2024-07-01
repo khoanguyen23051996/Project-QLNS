@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\LoginRequest;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -18,11 +19,17 @@ class AuthController extends Controller
     }
 
     public function login(LoginRequest $request){
+        $email = $request->input('email');
+
         $credentials = [
-            'email' => $request->input('email'),
+            'email' => $email,
             'password' => $request->input('password'),
         ];
-
+        $user = User::where('email', $email)->first();
+        if($user && $user->status == -1){
+            return redirect()->route('auth.admin')->with('error', "Tài khoản $email đã bị khoá");
+        }
+        // if($user && '')
         if ($credentials) {
             // If user exists, attempt to authenticate
             if (Auth::attempt($credentials)) {
