@@ -77,7 +77,7 @@
                   <form id="delete-edit-form" action="{{ route('admin.department.destroy', ['departmentid' => $data->id]) }}" method="post">
                     @csrf
                     <button id="delete-button" onclick="return confirm('Bạn muốn xoá?')" class="btn btn-danger" type="submit"><i class="fa fa-trash"></i></button>
-                    <a id="edit-button" href="{{ route('admin.department.detail', ['departmentid' => $data->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
+                    <a id="edit-button" href="{{ route('admin.department.edit', ['departmentid' => $data->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
                   </form>
                 </td>
               </tr>

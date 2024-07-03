@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->string('code', 10)->nullable()->unique();
-            $table->string('name', 255)->nullable()->unique();
+            $table->string('code', 10)->unique();
+            $table->string('name', 255)->unique();
             $table->timestamps();
             $table->softDeletes();
         });

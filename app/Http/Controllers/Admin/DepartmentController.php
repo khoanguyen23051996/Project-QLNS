@@ -58,8 +58,8 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function detail(Request $request, DepartmentModel $departmentid ){
-        return view('admin.pages.department.detail', ['data' => $departmentid]);
+    public function edit(Request $request, DepartmentModel $departmentid ){
+        return view('admin.pages.department.edit', ['data' => $departmentid]);
     }
 
     /**

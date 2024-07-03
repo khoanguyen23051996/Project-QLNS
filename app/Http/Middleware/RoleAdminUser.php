@@ -5,9 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Auth;
 
-class AuthenticateMiddleware
+class RoleAdminUser
 {
     /**
      * Handle an incoming request.
@@ -16,10 +15,12 @@ class AuthenticateMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        
-        if(Auth::id() == null){
-            return redirect()->route('auth.admin')->with('error', 'Bạn chưa đăng nhập!');
+        $user = auth()->user();
+        if($user->role == 0 || $user->role == 1 || $user->role == 2)
+        {
+            return $next($request);
         }
-        return $next($request);
+
+        return back();
     }
 }

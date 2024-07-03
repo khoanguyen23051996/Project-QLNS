@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->dateTime('checkin_at');
             $table->dateTime('checkout_at')->nullable();
-            $table->string('status');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->softDeletes();
         });
     }

@@ -22,8 +22,8 @@ class PositionStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:position,name|max:255',
-            'departmentid' => 'required|unique:department,departmentid|max:5|min:3',
+            'name' => 'required|unique:positions,name|max:255',
+            'code' => 'required|unique:positions,code|max:10|min:3',
         ];
     }
 
@@ -33,9 +33,9 @@ class PositionStoreRequest extends FormRequest
             'name.required' => 'Bạn chưa nhập Chức vụ...!',
             'name.max' => 'Tên tối đa 255 kí tự...!',
             'name.unique' => 'Chức vụ này đã tồn tại...!',
-            'departmentid.unique' => 'Mã chức vụ đã tồn tại...!',
-            'departmentid.max' => 'Mã chức vụ tối đa 5 kí tự...!',
-            'departmentid.min' => 'Mã chức vụ ít nhất 3 kí tự...!',
+            'code.unique' => 'Mã chức vụ đã tồn tại...!',
+            'code.max' => 'Mã chức vụ tối đa 10 kí tự...!',
+            'code.min' => 'Mã chức vụ ít nhất 3 kí tự...!',
         ];
     }
 }

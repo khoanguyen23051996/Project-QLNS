@@ -56,7 +56,7 @@
             <!-- form start -->      
             <div class="card card-plain">
               <div class="card-body">
-                <form role="form" method="post" action="{{ route('admin.position.update', ['id' => $data->id]) }}" >
+                <form role="form" method="post" action="{{ route('admin.position.update', ['positionid' => $data->id]) }}" >
                   @csrf
                   <div class="input-group input-group-outline mb-3">
                     <input type="text" value="{{ old('code') ?? $data['code'] }}" name="code" class="form-control" id="position" placeholder="Mã chức vụ">

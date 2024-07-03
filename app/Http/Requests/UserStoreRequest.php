@@ -20,20 +20,22 @@ class UserStoreRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules(): array 
     {
         return [
+            'code' => 'required|min:5|max:10',
             'name' => 'required|min:5|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => ['required', 'confirmed', Password::min(5)
-                ->letters()
-                ->mixedCase()
-                ->numbers()
-                ->symbols()
-            ],
-            // 'password_confirmation' => 'required|confirmed',
-            'position' => 'required',
-        ];
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|confirmed|min:5|max:255',
+            'role' => 'required|in:0,1,2',
+            'dob' => 'required|date',
+            'address' => 'required',
+            'phone' => 'required|max:15',
+            'status' => 'required|in:-1,1',
+            'image' => 'required',
+            'department_id' => 'required|exists:departments,id',
+            'position_id' => 'required|exists:positions,id',
+            ];
     }
 
     public function messages(): array
@@ -46,18 +48,9 @@ class UserStoreRequest extends FormRequest
             'email.email' => 'Bạn chưa nhập đúng định dạng Email...!',
             'email.unique' => 'Email này đã tồn tại...!',
             'password.required' => 'Bạn chưa nhập Password...!',
-            'password.min' => 'Password tối thiểu 5 kí tự...!',
             'password.confirmed' => 'Password và Confirm Password không khớp...!',
-            'password' => [
-                'letters' => 'Password phải có chữ HOA, thường, số và kí tự đặc biệt',
-                'mixedCase' => 'Password phải có chữ HOA, thường, số và kí tự đặc biệt',
-                'numbers' => 'Password phải có chữ HOA, thường, số và kí tự đặc biệt',
-                'symbols' => 'Password phải có chữ HOA, thường, số và kí tự đặc biệt',
-            ],
-
-            'password_confirmation.required' => 'Bạn chưa nhập xác nhận Password...!',
-            // 'password_confirmation.confirmed' => 'Bạn chưa nhập Confirmed Password!',
             'position.required' => 'Bạn chưa phân quyền...!',
+            'position.in' => 'Phân quyền không chính xác.',
         ];
-    }
+    }   
 }

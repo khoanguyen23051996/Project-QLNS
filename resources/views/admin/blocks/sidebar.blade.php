@@ -10,6 +10,7 @@
     <hr class="horizontal light mt-0 mb-2">
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
+        @if ($user->role == 0 )
         <li class="nav-item">
           <a class="nav-link text-white active bg-gradient-primary" href={{ route('admin.dashboard.index') }}>
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -18,6 +19,8 @@
             <span class="nav-link-text ms-1">Tổng quan</span>
           </a>
         </li>
+        @endif
+        @if ($user->role == 0 || $user->role == 2)
         <li class="nav-item">
           <a class="nav-link text-white " href="{{ route('admin.staff.index') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -26,7 +29,9 @@
             <span class="nav-link-text ms-1">Danh sách nhân viên</span>
           </a>
         </li>
-        @if ($user->position == 0)
+        @endif
+
+        @if ($user->role == 0 )
         <li class="nav-item">
           <a class="nav-link text-white " href="{{ route('admin.user.index') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -36,6 +41,8 @@
           </a>
         </li>
         @endif
+
+        @if ($user->role == 0 || $user->role == 2)
         <li class="nav-item">
           <a class="nav-link text-white " href="{{ route('admin.department.index') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -44,6 +51,7 @@
             <span class="nav-link-text ms-1">Quản lí phòng ban</span>
           </a>
         </li>
+       
         <li class="nav-item">
           <a class="nav-link text-white " href="{{ route('admin.position.index') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -52,26 +60,23 @@
             <span class="nav-link-text ms-1">Quản lí chức vụ</span>
           </a>
         </li>
+        @endif
+
         <li class="nav-item">
-          <a class="nav-link text-white " href="{{ route('admin.attendance') }}">
+          <a class="nav-link text-white " href="{{ route('admin.attendance.index') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
             </div>
             <span class="nav-link-text ms-1">Bảng chấm công</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-white " href="{{ route('admin.salaries') }}">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">notifications</i>
-            </div>
-            <span class="nav-link-text ms-1">Quản lí lương</span>
-          </a>
-        </li>
+        
+       
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
         </li>
-        @if ($user->position == 0)
+        
+        @if ($user->role == 0 )
         <li class="nav-item">
           <a class="nav-link text-white " href="{{ route('admin.user.create') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">

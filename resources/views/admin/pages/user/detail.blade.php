@@ -88,12 +88,12 @@
                   
                   <div class="form-group">
                     <label for="position">Phân quyền</label>                 
-                     <div class="input-group input-group-outline mb-3">
-                    <select name="position" class="form-control" id="position">
-                      <option value="">---Please Select---</option>
-                      <option {{ (old('position') ?? $user->position) == '1' ? 'selected' : '' }} value="1">Nhân viên</option>
-                      <option {{ (old('position') ?? $user->position) == '0' ? 'selected' : '' }} value="0">Quản lí</option>
-                    </select>
+                    <div class="input-group input-group-outline mb-3">
+                      <select name="position" class="form-control" id="position">
+                        <option value="">---Please Select---</option>
+                        <option {{ (old('position') ?? $user->position) == '1' ? 'selected' : '' }} value="1">Nhân viên</option>
+                        <option {{ (old('position') ?? $user->position) == '0' ? 'selected' : '' }} value="0">Quản lí</option>
+                      </select>
                     </div>
                     @error('position')
                       <span class="text-danger">{{ $message }}<span>

@@ -92,7 +92,6 @@
                 <td>{{ $user->status_text  }}</td>
                 <td>
                   @if($user->trashed())
-                  {{ dd($user) }}
                     <form action="{{ route('admin.user.restore', ['id' => $user->id]) }}" method="post">
                       @csrf
                       <button onclick="return confirm('Bạn muốn khôi phục lại tài khoản?')" class="btn btn-success" type="submit">Restore</button>

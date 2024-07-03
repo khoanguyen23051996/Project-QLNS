@@ -22,9 +22,10 @@ class DepartmentUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('departmentid');
         return [
-            'name' => 'required|unique:departments,name|max:255',
-            'code' => 'required|unique:departments,code|max:10|min:3',
+            'name' => 'required|unique:departments,name,' . $id . ',id|max:255',
+            'code' => 'required|unique:departments,code,' . $id . ',id|max:10|min:3',
         ];
     }
 

@@ -21,9 +21,10 @@ class PositionUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('positionid');
         return [
-            'name' => 'required|unique:department,name|max:255',
-            'positionid' => 'required|unique:position,positionid|max:5|min:3',
+            'name' => 'required|unique:positions,name,' . $id . ',id|max:255',
+            'code' => 'required|unique:positions,code,' . $id . ',id|max:10|min:3',
         ];
     }
 
@@ -33,9 +34,9 @@ class PositionUpdateRequest extends FormRequest
             'name.required' => 'Bạn chưa nhập Tên bộ phận...!',
             'name.max' => 'Tên tối đa 255 kí tự...!',
             'name.unique' => 'Tên bộ phận này đã tồn tại...!',
-            'positionid.unique' => 'Mã chức vụ đã tồn tại...!',
-            'positionid.max' => 'Mã chức vụ tối đa 5 kí tự...!',
-            'positionid.min' => 'Mã chức vụ ít nhất 3 kí tự...!',
+            'code.unique' => 'Mã chức vụ đã tồn tại...!',
+            'code.max' => 'Mã chức vụ tối đa 10 kí tự...!',
+            'code.min' => 'Mã chức vụ ít nhất 3 kí tự...!',
         ];
     }
 }

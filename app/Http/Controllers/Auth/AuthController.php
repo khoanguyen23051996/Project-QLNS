@@ -8,13 +8,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\LoginRequest;
 use App\Models\User;
+use App\Models\UserModel;
 
 class AuthController extends Controller
 {
     public function index(Request $request){
-        if(Auth::check()){
-            return redirect()->route('admin.dashboard.index');
-        }
         return view('auth.login');
     }
 
@@ -29,7 +27,7 @@ class AuthController extends Controller
         if($user && $user->status == -1){
             return redirect()->route('auth.admin')->with('error', "Tài khoản $email đã bị khoá");
         }
-        // if($user && '')
+        
         if ($credentials) {
             // If user exists, attempt to authenticate
             if (Auth::attempt($credentials)) {
