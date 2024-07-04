@@ -62,28 +62,29 @@
               <form action="{{ route('admin.department.create') }}" method="GET">
                 <button id="add-button"  class="btn btn-insert" type="submit" style="background-color: rgb(57, 223, 57)"><i class="fa fa-plus">     Thêm phòng ban</i></button>
               </form>
-              @foreach ($datas as $data)
+              @foreach ($departments as $department)
               <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $data->code }}</td>
-                <td>{{ $data->name }}</td>
+                <td>{{ $department->code }}</td>
+                <td>{{ $department->name }}</td>
                 <td>
-                  @if($data->trashed())
-                    <form action="{{ route('admin.department.restore', ['id' => $data->id]) }}" method="post">
+                  @if($department->trashed())
+                    <form action="{{ route('admin.department.restore', ['id' => $department->id]) }}" method="post">
                       @csrf
                       <button onclick="return confirm('Bạn muốn khôi phục?')" class="btn btn-success" type="submit" >Restore</button>
                     </form>
                   @endif
-                  <form id="delete-edit-form" action="{{ route('admin.department.destroy', ['departmentid' => $data->id]) }}" method="post">
+                  <form id="delete-edit-form" action="{{ route('admin.department.destroy', ['departmentid' => $department->id]) }}" method="post">
                     @csrf
                     <button id="delete-button" onclick="return confirm('Bạn muốn xoá?')" class="btn btn-danger" type="submit"><i class="fa fa-trash"></i></button>
-                    <a id="edit-button" href="{{ route('admin.department.edit', ['departmentid' => $data->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
+                    <a id="edit-button" href="{{ route('admin.department.edit', ['departmentid' => $department->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
                   </form>
                 </td>
               </tr>
               @endforeach
             </tbody>
           </table>
+          {{ $departments->links('vendor.pagination.paginate') }}  
         </div>
       </div>
     </div>

@@ -15,8 +15,8 @@ class PositionController extends Controller
      */
     public function index(Request $request)
     {
-        $datas = PositionModel::withTrashed()->get();
-        return view('admin.pages.position.index', ['datas' => $datas]);
+        $positions = PositionModel::withTrashed()->paginate(5);
+        return view('admin.pages.position.index', ['positions' => $positions]);
     }
 
     /**

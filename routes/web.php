@@ -35,7 +35,6 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('admin.user.')
         ->controller(UserController::class)
         ->group(function(){
-            Route::get('/', 'index')->name('index');
             Route::get('create', 'create')->name('create');
             Route::get('detail/{id}', 'detail')->name('detail');
             Route::post('destroy/{user}', 'destroy')->name('destroy');
@@ -43,7 +42,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('store', 'store')->name('store');
             Route::post('update/{id}', 'update')->name('update');
             Route::post('change_status/{user}', 'changeStatus')->name('change_status');
-            Route::post('/', 'search')->name('search');
+            
         });
        
     });
@@ -55,6 +54,15 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::group(['middleware' => 'role.admin.hr'], function () {
       
+
+        Route::prefix('admin/user')
+        ->name('admin.user.')
+        ->controller(UserController::class)
+        ->group(function(){
+            Route::get('/', 'index')->name('index');
+            Route::post('/', 'search')->name('search');
+        });
+
          //Department
          Route::prefix('admin/department')
          ->name('admin.department.')

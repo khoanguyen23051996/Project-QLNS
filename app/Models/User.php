@@ -58,12 +58,12 @@ class User extends Authenticatable
     protected $guarded = [];
 
     public function getStatusTextAttribute() {
-        return $this->status == 1 ? 'Đang hoạt động' : 'Không hoạt động';
+        return $this->status == 1 ? 'Đang làm việc' : 'Đã nghỉ việc';
     }
 
     public static function indexSearch($requestData){
-        $page = $requestData['page'] ?? 1;
-        $length = $requestData['length'] ?? 5;
+        // $page = $requestData['page'] ?? 1;
+        // $length = $requestData['length'] ?? 5;
         $name = $requestData['name'] ?? null ;
         $status = $requestData['status'] ?? null ;
         $users = User::query();
@@ -73,22 +73,29 @@ class User extends Authenticatable
         if($status){
             $users->where('status', $status);
         }
-        $totalUser = $users->count();   
-        $totalPage = (floor($totalUser / $length) + (($totalUser % $length) ? 1 : 0) );
-        $users = $users->offset(($page-1)*$length)->limit($length)->get();
-        
+        // $totalUser = $users->count();   
+        // $totalPage = (floor($totalUser / $length) + (($totalUser % $length) ? 1 : 0) );
+        // $users = $users->offset(($page-1)*$length)->limit($length)->get();
+
+        $users = $users->paginate(5);
         return [
             'users' => $users,
-            'page' => $page,
-            'length' => $length,
-            'totalUser' => $totalUser,
-            'totalPage' => $totalPage,
             'name' => $name,
             'status' => $status,
         ];
     }
 
     public function user(){
-        return $this->belongsTo(User::class, 'id')->withTrashed();
+        return $this->belongsTo(User::class, 'user')->withTrashed();
+    }
+
+    public function position()
+    {
+        return $this->belongsTo(PositionModel::class);
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(DepartmentModel::class);
     }
 }

@@ -17,8 +17,8 @@ class DepartmentController extends Controller
      */
     public function index(Request $request)
     {
-        $datas = DepartmentModel::withTrashed()->get();
-        return view('admin.pages.department.index', ['datas' => $datas]);
+        $departments = DepartmentModel::withTrashed()->paginate(5);
+        return view('admin.pages.department.index', ['departments' => $departments]);
     }
 
     /**

@@ -21,7 +21,7 @@ class UserController extends Controller
 
     public function store(UserStoreRequest $request){
         $user = new User();
-        if($request->hasFile('file')) {
+        if($request->hasFile('image')) {
            
                 // $folderName = date('Y/m');
                 // $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
@@ -31,22 +31,50 @@ class UserController extends Controller
                 // $file->move(public_path('storage/uploads/' . $folderName), $fileName);
                 // $post->postImages()->create(['image' => 'uploads/' . $folderName . '/' . $fileName]);
         
+            $image = $request->file('image');
+            $fileName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = $image->getClientOriginalExtension();
+            $fieldNameNew = $fileName . '_' . uniqid() . '.' . $extension;
+            $image->move(public_path('uploads/images'), $fieldNameNew);
         }
-        $result = $user->fill([
-            'code' => $request->code,
-            'name' => $request->name,
-            'email' => $request->email,
-            'dob' => $request->dob,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'password' => Hash::make($request->password),
-            'position_id' => $request->position_id,
 
-            
-        ])->save();
-        $message = $result ? 'Tạo tài khoản thành công' : 'Tạo tài khoản thất bại';
+        $user->code = $request->code;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role = $request->role;
+        $user->dob = $request->dob;
+        $user->address = $request->address;
+        $user->image = $fieldNameNew;
+        $user->status = $request->status;
+        $user->position_id = $request->position_id;
+        $user->department_id = $request->department_id;
+        $user->password = Hash::make($request->password);
 
-        return redirect()->route('admin.user.index')->with('success', $message);
+        if($user->save())
+        {
+            return redirect()->route('admin.user.index')->with('success', 'Thêm nhân viên thành công');
+        }
+        else{
+            return back()->with('error', 'Thêm nhân viên thất bại');
+        }
+
+        // $result = $user->fill([
+        //     'code' => $request->code,
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'role' => $request->role,
+        //     'dob' => $request->dob,
+        //     'address' => $request->address,
+        //     'phone' => $request->phone,
+        //     'status' => $request->status,
+        //     'password' => Hash::make($request->password),
+        //     'image' => $request->fieldNameNew,
+        //     'position_id' => $request->position_id,
+        //     'department_id' => $request->department_id,
+        // ])->save();
+
+
+        
     }
 
     public function index(Request $request){

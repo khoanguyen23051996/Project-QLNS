@@ -22,4 +22,9 @@ class PositionModel extends Model
     public function position(){
         return $this->hasMany(User::class, 'id')->withTrashed();
     }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

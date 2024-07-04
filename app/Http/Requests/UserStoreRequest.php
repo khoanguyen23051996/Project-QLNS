@@ -30,17 +30,22 @@ class UserStoreRequest extends FormRequest
             'role' => 'required|in:0,1,2',
             'dob' => 'required|date',
             'address' => 'required',
-            'phone' => 'required|max:15',
+            'phone' => 'required|min:5|max:15',
             'status' => 'required|in:-1,1',
-            'image' => 'required',
             'department_id' => 'required|exists:departments,id',
             'position_id' => 'required|exists:positions,id',
-            ];
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+        ];
     }
 
     public function messages(): array
     {
         return [
+            'image.image' => 'Định dạng không đúng',
+            'image.minmes' => 'Định dạng không đúng',
+            'code.required' => 'Bạn chưa nhập mã nhân viên...!',
+            'code.min' => 'Mã nhân viên tối thiểu 5 kí tự...!',
+            'code.max' => 'Mã nhân viên tối đa 5 kí tự...!',
             'name.required' => 'Bạn chưa nhập Họ Tên...!',
             'name.min' => 'Tên tối thiểu 5 kí tự...!',
             'name.max' => 'Tên tối đa 255 kí tự...!',
@@ -49,8 +54,22 @@ class UserStoreRequest extends FormRequest
             'email.unique' => 'Email này đã tồn tại...!',
             'password.required' => 'Bạn chưa nhập Password...!',
             'password.confirmed' => 'Password và Confirm Password không khớp...!',
-            'position.required' => 'Bạn chưa phân quyền...!',
-            'position.in' => 'Phân quyền không chính xác.',
+            'password.min' => 'Tối đa 255 kí tự',
+            'password.max' => 'Tối thiểu 5 kí tự',
+            'role.required' => 'Bạn chưa phân quyền...!',
+            'role.in' => 'Phân quyền không chính xác.',
+            'dob.required' => 'Bạn chưa chọn dữ liệu...!',
+            'dob.date' => 'Lỗi ngày',
+            'address.required' => 'Bạn chưa nhập dữ liệu...!',
+            'phone.required' => 'Bạn chưa nhập dữ liệu...!',
+            'phone.max' => 'Số điện thoại tối đa 15 kí tự...!',
+            'phone.min' => 'Số điện thoại tối thiểu 5 kí tự...!',
+            'status.required' => 'Bạn chưa chọn dữ liệu...!',
+            'status.in' => 'Trạng thái không chính xác...!',
+            'department_id.required' => 'Bạn chưa chọn phòng ban...!',
+            'department_id.exists' => 'Lỗi!',
+            'position_id.required' => 'Bạn chưa chọn chức vụ...!',
+            'position_id.exists' => 'Lỗi',
         ];
     }   
 }

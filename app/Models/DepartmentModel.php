@@ -24,4 +24,9 @@ class DepartmentModel extends Model
     public function department(){
         return $this->belongsTo(User::class, 'departmentid')->withTrashed();
     }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

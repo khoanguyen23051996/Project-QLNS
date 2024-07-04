@@ -40,7 +40,7 @@
     <div class="card my-4">
       <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
         <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-          <h6 class="text-white text-capitalize ps-3">Tài khoản nhân viên</h6>
+          <h6 class="text-white text-capitalize ps-3">Tài khoản trash</h6>
         </div>
       </div>
       <div class="card-body px-0 pb-2">
@@ -59,8 +59,8 @@
                 @php($status = $status ?? null)
               <select name="status" class="form-control" id="position" >
                 <option value="">---Please Select---</option>
-                <option value="1" {{$status == 1 ? 'selected' : ''}}>Đang làm việc</option>
-                <option value="-1" {{$status == -1 ? 'selected' : ''}}>Đã nghỉ việc</option>
+                <option value="1" {{$status == 1 ? 'selected' : ''}}>Đang hoạt động</option>
+                <option value="-1" {{$status == -1 ? 'selected' : ''}}>Không hoạt động</option>
               </select>
               </div>
             </div>
@@ -75,16 +75,11 @@
             <thead>
               <tr>
                 <th style="width: 5px">#</th>
-                <th >Hình ảnh</th>
-                <th >Mã nhân viên</th>
                 <th >Họ tên</th>
                 <th >Email</th>
-                <th >Ngày sinh</th>
-                <th >Địa chỉ</th>
-                <th >Điện thoại</th>
+                <th >Quyền</th>
                 <th >Trạng thái</th>
-                <th >Phòng ban</th>
-                <th >Chức vụ</th>
+                <th >Thao tác</th>
               </tr>
             </thead>
             <tbody>
@@ -92,22 +87,11 @@
              
               <tr>
                 <td>{{ ($users->currentPage() - 1) * $users->perPage() + $index + 1  }}</td>
-                <td>
-                  <img src="{{asset('/uploads/images/'.$user->image)}}" alt="" width="50px" height="50px">
-                </td>
-                <td>{{ $user->code }}</td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
-                <td>{{ $user->dob }}</td>
-                <td>{{ $user->address }}</td>
-                <td>{{ $user->phone }}</td>
-                <td>{{ $user->status == 1 ? 'Đang làm việc' : 'Đã nghỉ việc' }}</td>
-                <td>{{ optional($user->department)->name}}</td>
-                <td>{{ optional($user->position)->name }}</td>
-                {{-- <td>{{ $user->role ? 'Nhân viên' : 'Quản lí' }}</td>
-                <td>{{ $user->status_text  }}</td> --}}
+                <td>{{ $user->role ? 'Nhân viên' : 'Quản lí' }}</td>
+                <td>{{ $user->status_text  }}</td>
                 <td>
-                  @if(auth()->user()->role == 0)
                   <form method="post" action="{{ route('admin.user.change_status', ['user' => $user->id, 'page'=> $users->currentPage(), 'name'=>$name, 'status'=>$status]) }}">
                     @csrf
                     <button id="delete-button" onclick="return confirm('Bạn muốn đổi trạng thái nhân viên này?')" class="btn btn-warning" type="submit"><i class="fa fa-trash"></i></button>
@@ -117,7 +101,6 @@
                     <button id="delete-button" onclick="return confirm('Bạn muốn xoá nhân viên này?')" class="btn btn-danger" type="submit"><i class="fa fa-trash"></i></button>
                     <a id="edit-button" href="{{ route('admin.user.detail', ['id' => $user->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
                   </form>
-                  @endif
                 </td>
               </tr>
             @endforeach
@@ -125,8 +108,7 @@
           </table>
         </div>
         <div class="col-12">
-          {{ $users->links('vendor.pagination.paginate') }}  
-          {{-- {{ $users->links() }} --}}
+          {{ $users->links() }}
           {{-- <div class="btn-group" role="group" aria-label="Basic outlined example">
             <button type="button" class="btn btn-outline-primary">Trang {{ $page }} của {{$totalPage}}</button>
             @if ($page >= 3)

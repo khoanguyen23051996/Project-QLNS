@@ -58,28 +58,29 @@
               <form action="{{ route('admin.position.create') }}" method="GET">
                 <button id="add-button"  class="btn btn-insert" type="submit" style="background-color: rgb(57, 223, 57)"><i class="fa fa-plus">     Thêm chức vụ</i></button>
               </form>
-              @foreach ($datas as $data)
+              @foreach ($positions as $position)
               <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $data->code }}</td>
-                <td>{{ $data->name }}</td>
+                <td>{{ $position->code }}</td>
+                <td>{{ $position->name }}</td>
                 <td>
-                  @if($data->trashed())
-                    <form action="{{ route('admin.position.restore', ['id' => $data->id]) }}" method="post">
+                  @if($position->trashed())
+                    <form action="{{ route('admin.position.restore', ['id' => $position->id]) }}" method="post">
                       @csrf
                       <button onclick="return confirm('Bạn muốn khôi phục?')" class="btn btn-success" type="submit" >Restore</button>
                     </form>
                   @endif
-                  <form id="delete-edit-form" action="{{ route('admin.position.destroy', ['id' => $data->id]) }}" method="post">
+                  <form id="delete-edit-form" action="{{ route('admin.position.destroy', ['id' => $position->id]) }}" method="post">
                     @csrf
                     <button id="delete-button" onclick="return confirm('Bạn muốn xoá?')" class="btn btn-danger" type="submit"><i class="fa fa-trash"></i></button>
-                    <a id="edit-button" href="{{ route('admin.position.detail', ['id' => $data->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
+                    <a id="edit-button" href="{{ route('admin.position.detail', ['id' => $position->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
                   </form>
                 </td>
               </tr>
               @endforeach
             </tbody>
           </table>
+          {{ $positions->links('vendor.pagination.paginate') }}  
         </div>
       </div>
     </div>
