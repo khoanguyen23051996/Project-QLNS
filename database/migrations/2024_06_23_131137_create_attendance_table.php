@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->dateTime('checkin_at');
             $table->dateTime('checkout_at')->nullable();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
             $table->softDeletes();
         });
     }

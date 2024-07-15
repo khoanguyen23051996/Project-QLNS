@@ -21,6 +21,6 @@ class RoleAdminHR
             return $next($request);
         }
 
-        return back();
+        return redirect()->route('admin.attendance.index');
     }
 }

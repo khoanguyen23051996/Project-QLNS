@@ -23,7 +23,7 @@ class DepartmentStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:departments,name|max:255',
-            'code' => 'required|unique:departments,code|max:10|min:3',
+            'code' => 'required|unique:departments,code|max:10|min:3|',
         ];
     }
 

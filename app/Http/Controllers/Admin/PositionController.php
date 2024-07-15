@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PositionUpdateRequest;
 use App\Models\PositionModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PositionController extends Controller
 {
@@ -15,8 +15,9 @@ class PositionController extends Controller
      */
     public function index(Request $request)
     {
+        $users = Auth::user();
         $positions = PositionModel::withTrashed()->paginate(5);
-        return view('admin.pages.position.index', ['positions' => $positions]);
+        return view('admin.pages.position.index', ['positions' => $positions,'user'=>$users]);
     }
 
     /**
@@ -59,9 +60,9 @@ class PositionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function detail(Request $request, PositionModel $id)
+    public function edit(Request $request, PositionModel $id)
     {
-        return view('admin.pages.position.detail', ['data' => $id]);
+        return view('admin.pages.position.edit', ['data' => $id]);
     }
 
     /**

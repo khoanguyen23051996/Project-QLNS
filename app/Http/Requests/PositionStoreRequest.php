@@ -23,7 +23,7 @@ class PositionStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:positions,name|max:255',
-            'code' => 'required|unique:positions,code|max:10|min:3',
+            'code' => 'required|unique:positions,code|max:10|min:3|',
         ];
     }
 

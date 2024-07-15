@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -66,36 +68,53 @@ class User extends Authenticatable
         // $length = $requestData['length'] ?? 5;
         $name = $requestData['name'] ?? null ;
         $status = $requestData['status'] ?? null ;
+        $position = $requestData['position'] ?? null ;
+       
         $users = User::query();
         if($name){
             $users->where('name', 'LIKE', "%$name%");
         }
         if($status){
-            $users->where('status', $status);
+            $users->orwhere('status', $status);
         }
-        // $totalUser = $users->count();   
-        // $totalPage = (floor($totalUser / $length) + (($totalUser % $length) ? 1 : 0) );
-        // $users = $users->offset(($page-1)*$length)->limit($length)->get();
+
+        if($position){
+            $users->orwhere('position_id', $position);
+        }
 
         $users = $users->paginate(5);
         return [
+            'user' => Auth()->user(),
             'users' => $users,
             'name' => $name,
             'status' => $status,
+            'position' => $position,
         ];
     }
 
+    public static function getStatusCounts()
+    {
+        return self::select('status', DB::raw('count(*) as total'))
+            ->groupBy('status')
+            ->get();
+    }
+
     public function user(){
-        return $this->belongsTo(User::class, 'user')->withTrashed();
+        return $this->hasMany(User::class, 'user')->withTrashed();
     }
 
     public function position()
     {
-        return $this->belongsTo(PositionModel::class);
+        return $this->belongsTo(PositionModel::class,'position_id');
     }
 
     public function department()
     {
-        return $this->belongsTo(DepartmentModel::class);
+        return $this->belongsTo(DepartmentModel::class,'department_id');
+    }
+
+    public function attendances()
+    {
+        return $this->hasMany(AttendanceModel::class, 'user_id');
     }
 }

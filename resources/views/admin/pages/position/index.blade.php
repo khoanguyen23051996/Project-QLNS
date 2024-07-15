@@ -10,20 +10,13 @@
       </ol>
       <h6 class="font-weight-bolder mb-0">Danh sách chức vụ</h6>
     </nav>
-    <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-      <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-        <div class="input-group input-group-outline">
-          <label class="form-label">Type here...</label>
-          <input type="text" class="form-control">
+    <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" >
+      <div class="ms-md-auto pe-md-3 d-flex" >
+        <div class="input-group input-group-outline" >
+            <h4 >Hello, {{ $user->name }}</h4> 
         </div>
       </div>
       <ul class="navbar-nav  justify-content-end">
-        <li class="nav-item dropdown pe-2 d-flex align-items-center">
-            <i class="fa fa-bell cursor-pointer"></i>
-          </a>
-          <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-          </ul>
-        </li>
         <li class="nav-item d-flex align-items-center">
             <i class="fa fa-user me-sm-1"></i>
           </a>
@@ -58,9 +51,9 @@
               <form action="{{ route('admin.position.create') }}" method="GET">
                 <button id="add-button"  class="btn btn-insert" type="submit" style="background-color: rgb(57, 223, 57)"><i class="fa fa-plus">     Thêm chức vụ</i></button>
               </form>
-              @foreach ($positions as $position)
+              @foreach ($positions as $index => $position)
               <tr>
-                <td>{{ $loop->iteration }}</td>
+                <td>{{ ($positions->currentPage() - 1) * $positions->perPage() + $index + 1  }}</td>
                 <td>{{ $position->code }}</td>
                 <td>{{ $position->name }}</td>
                 <td>
@@ -69,12 +62,13 @@
                       @csrf
                       <button onclick="return confirm('Bạn muốn khôi phục?')" class="btn btn-success" type="submit" >Restore</button>
                     </form>
+                  @else
+                    <form id="delete-edit-form" action="{{ route('admin.position.destroy', ['id' => $position->id]) }}" method="post">
+                      @csrf
+                      <button id="delete-button" onclick="return confirm('Bạn muốn xoá?')" class="btn btn-danger" type="submit"><i class="fa fa-trash"></i></button>
+                      <a id="edit-button" href="{{ route('admin.position.edit', ['id' => $position->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
+                    </form>
                   @endif
-                  <form id="delete-edit-form" action="{{ route('admin.position.destroy', ['id' => $position->id]) }}" method="post">
-                    @csrf
-                    <button id="delete-button" onclick="return confirm('Bạn muốn xoá?')" class="btn btn-danger" type="submit"><i class="fa fa-trash"></i></button>
-                    <a id="edit-button" href="{{ route('admin.position.detail', ['id' => $position->id]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
-                  </form>
                 </td>
               </tr>
               @endforeach

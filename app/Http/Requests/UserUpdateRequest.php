@@ -23,34 +23,55 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('id');        
         return [
+            'code' => 'required|min:5|max:10|unique:users,code,' . $id . ',id',
             'name' => 'required|min:5|max:255',
-            'email' => ['required', 'email', Rule::unique('users')->ignore(request()->id)],
-            'password' => [
-                'nullable', 
-                'confirmed', 
-                Password::min(8)
-                    ->letters()
-                    ->mixedCase()
-                    ->numbers()
-                    ->symbols()
-            ],
-            'position' => 'required',
+            'password' => 'nullable|confirmed|min:5|max:255',
+            'role' => 'required|in:0,1,2',
+            'dob' => 'required|date',
+            'address' => 'required',
+            'phone' => 'required|min:5|max:15',
+            'status' => 'required|in:-1,1',
+            'department_id' => 'required|exists:departments,id',
+            'position_id' => 'required|exists:positions,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ];
     }
+    
 
     public function messages()
     {
         return [
+            'image.image' => 'Bạn chưa nhập dữ liệu...!',
+            'image.mimes' => 'Định dạng không đúng...!',
+            'code.required' => 'Bạn chưa nhập mã nhân viên...!',
+            'code.min' => 'Mã nhân viên tối thiểu 5 kí tự...!',
+            'code.max' => 'Mã nhân viên tối đa 5 kí tự...!',
             'name.required' => 'Bạn chưa nhập Họ Tên...!',
             'name.min' => 'Tên tối thiểu 5 kí tự...!',
             'name.max' => 'Tên tối đa 255 kí tự...!',
             'email.required' => 'Bạn chưa nhập Email...!',
-            'email.email' => 'Bạn chưa nhập đúng định dang Email...!',
+            'email.email' => 'Bạn chưa nhập đúng định dạng Email...!',
             'email.unique' => 'Email này đã tồn tại...!',
             'password.required' => 'Bạn chưa nhập Password...!',
-            'password.min' => 'Password tối thiểu 5 kí tự...!',
-            'position.required' => 'Bạn chưa phân quyền...!',
+            'password.confirmed' => 'Password và Confirm Password không khớp...!',
+            'password.min' => 'Tối đa 255 kí tự...!',
+            'password.max' => 'Tối thiểu 5 kí tự',
+            'role.required' => 'Bạn chưa phân quyền...!',
+            'role.in' => 'Phân quyền không chính xác...!',
+            'dob.required' => 'Bạn chưa chọn dữ liệu...!',
+            'dob.date' => 'Lỗi ngày',
+            'address.required' => 'Bạn chưa nhập dữ liệu...!',
+            'phone.required' => 'Bạn chưa nhập dữ liệu...!',
+            'phone.max' => 'Số điện thoại tối đa 15 kí tự...!',
+            'phone.min' => 'Số điện thoại tối thiểu 5 kí tự...!',
+            'status.required' => 'Bạn chưa chọn dữ liệu...!',
+            'status.in' => 'Trạng thái không chính xác...!',
+            'department_id.required' => 'Bạn chưa chọn phòng ban...!',
+            'department_id.exists' => 'Lỗi...!',
+            'position_id.required' => 'Bạn chưa chọn chức vụ...!',
+            'position_id.exists' => 'Lỗi...',
         ];
     }
 }

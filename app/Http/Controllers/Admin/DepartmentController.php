@@ -7,8 +7,7 @@ use App\Http\Requests\DepartmentStoreRequest;
 use App\Http\Requests\DepartmentUpdateRequest;
 use App\Models\DepartmentModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class DepartmentController extends Controller
 {
@@ -17,8 +16,9 @@ class DepartmentController extends Controller
      */
     public function index(Request $request)
     {
+        $users = Auth::user();
         $departments = DepartmentModel::withTrashed()->paginate(5);
-        return view('admin.pages.department.index', ['departments' => $departments]);
+        return view('admin.pages.department.index', ['departments' => $departments,'user'=>$users]);
     }
 
     /**

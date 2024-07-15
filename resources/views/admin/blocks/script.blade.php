@@ -3,6 +3,8 @@
 <script src="{{ asset('asset/js/plugins/perfect-scrollbar.min.js') }}"></script>
 <script src="{{ asset('asset/js/plugins/smooth-scrollbar.min.js') }}"></script>
 <script src="{{ asset('asset/js/plugins/chartjs.min.js') }}"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
   var ctx = document.getElementById("chart-bars").getContext("2d");
 

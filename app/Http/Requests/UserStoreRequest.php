@@ -23,7 +23,7 @@ class UserStoreRequest extends FormRequest
     public function rules(): array 
     {
         return [
-            'code' => 'required|min:5|max:10',
+            'code' => 'required|unique:users,code|min:5|max:10',
             'name' => 'required|min:5|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed|min:5|max:255',
@@ -41,11 +41,12 @@ class UserStoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'image.image' => 'Định dạng không đúng',
+            'image.image' => 'Bạn chưa nhập dữ liệu...!',
             'image.minmes' => 'Định dạng không đúng',
             'code.required' => 'Bạn chưa nhập mã nhân viên...!',
             'code.min' => 'Mã nhân viên tối thiểu 5 kí tự...!',
             'code.max' => 'Mã nhân viên tối đa 5 kí tự...!',
+            'code.unique' => 'Mã nhân viên đã tồn tại...!',
             'name.required' => 'Bạn chưa nhập Họ Tên...!',
             'name.min' => 'Tên tối thiểu 5 kí tự...!',
             'name.max' => 'Tên tối đa 255 kí tự...!',

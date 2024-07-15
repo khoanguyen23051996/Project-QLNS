@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
-  @include('admin.blocks.head');
+  @include('admin.blocks.head')
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
   
-  @include('admin.blocks.sidebar');
+  @include('admin.blocks.sidebar')
 
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
@@ -87,6 +88,7 @@
   </div>
   <!--   Core JS Files   -->
   @include('admin.blocks.script')
+  @yield('my-script')
 </body>
 
 </html>
