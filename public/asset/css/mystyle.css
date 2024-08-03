@@ -114,3 +114,42 @@ input.switch-status:checked:before {
   color: #fff;
 }
 
+.export-excel{
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.add-position{
+  margin-left: 20px;
+}
+
+.chart {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #f5f5f5;
+}
+
+#total_employee, #total_department {
+  width: 45%;
+  height: 440px;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+@media (max-width: 768px) {
+  #total_employee, #total_department {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+
+
+

@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory(10)->create();
+        // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
         //     'code' => 'NV001',
@@ -22,7 +22,5 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'admin@gmailcom',
         //     'password' => Hash::make('admin'),
         // ]);
-
-
     }
 }

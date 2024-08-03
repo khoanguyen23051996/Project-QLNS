@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
 
+    
     Route::group(['middleware' => 'role.admin.user'], function () {
         Route::get('admin/attendance', [AttendanceController::class, 'index'])->name('admin.attendance.index');
         Route::post('admin/attendance/checkin', [AttendanceController::class, 'checkin'])->name('admin.attendance.checkin');
@@ -54,7 +55,6 @@ Route::group(['middleware' => 'auth'], function () {
     
     
     Route::group(['middleware' => 'role.admin.hr'], function () {
-
         Route::get('admin/attendance-manager', [AttendanceManagerController::class, 'index'])->name('admin.attendance_manager.index');
         Route::post('admin/attendance-manager/search', [AttendanceManagerController::class, 'search'])->name('admin.attendance_manager.search');
 

@@ -64,8 +64,6 @@ class User extends Authenticatable
     }
 
     public static function indexSearch($requestData){
-        // $page = $requestData['page'] ?? 1;
-        // $length = $requestData['length'] ?? 5;
         $name = $requestData['name'] ?? null ;
         $status = $requestData['status'] ?? null ;
         $position = $requestData['position'] ?? null ;

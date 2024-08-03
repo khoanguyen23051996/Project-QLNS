@@ -131,7 +131,7 @@ class UserController extends Controller
     }
 
     public function changeStatus(Request $request){
-        if(Auth()->user()->role == "admin")
+        if(Auth()->user()->role == 0)
         {
             $user = User::find($request->user_id);
             if($user){

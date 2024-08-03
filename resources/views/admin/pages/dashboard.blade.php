@@ -83,82 +83,25 @@
               <p class="text-sm mb-0 text-capitalize">Tổng chức vụ</p>
               <h4 class="mb-0">{{ $datas['totalPosition']}}</h4>
             </div>
-            
           </div>
           <hr class="dark horizontal my-0">
         </div>
       </div>
+      <div class="export-excel">
+        <div class="col-sm-12 col-md-6 col-lg-4 form-group align-self-end">
+          <a href="{{ route('admin.dashboard.export') }}" class="btn btn-primary">Xuất Excel</a>
+        </div>
+      </div>
+      
     </div> 
-    <a href="{{ route('admin.dashboard.export') }}">Xuất Excel</a>
+    
   </div>
 </div>
 {{-- End Total --}}
 
-{{-- Container --}}
-{{-- <div class="container-fluid py-4">
-  <div class="row">
-    <div class="col-12">
-      <div class="card my-4">
-        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-          <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-            <h6 class="text-white text-capitalize ps-3">Tổng nhân viên từng phòng ban</h6>
-          </div>
-        </div>
-        <div class="card-body pb-2 row gx-4">
-          <div class="table-responsive  col-6 ">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th style="width: 70%">Tên phòng ban</th>
-                  <th style="">Tổng nhân sự</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach ($datas['usersByDepartments'] as $usersByDepartment )
-                  <tr>
-                    <td>
-                      {{$usersByDepartment->name}}
-                    </td>
-                    <td class="text-center">
-                     {{$usersByDepartment->users_count}}
-                    </td>
-                  </tr>
-                @endforeach
-              </tbody>
-            </table>
-          </div>
-
-          <div class="table-responsive  col-6">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th style="width: 70%">Tên Chức vụ</th>
-                  <th style="">Tổng nhân sự</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach ($datas['usersByPositions'] as $usersByPosition )
-                  <tr>
-                    <td>
-                      {{$usersByPosition->name}}
-                    </td>
-                    <td class="text-center">
-                     {{$usersByPosition->users_count}}
-                    </td>
-                  </tr>
-                @endforeach
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> --}}
-{{-- End Container --}}
-<div class="chart d-flex" style="padding: 20px" >
-  <div id="total_employee" style="width: 700px; height: 440px; padding: 20px; col-md-6" ></div>
-  <div id="total_department" style="width: 700px; height: 440px; padding: 20px; col-md-6"></div>
+<div class="chart d-flex"  >
+  <div id="total_employee"  ></div>
+  <div id="total_department" ></div>
 </div>
 @endsection
 
@@ -184,14 +127,6 @@
   google.charts.setOnLoadCallback(drawChart);
   function drawChart() {
     var data = google.visualization.arrayToDataTable(@json($dataDepartment));
-
-    // var view = new google.visualization.DataView(data);
-    // view.setColumns([0, 1,
-    //                  { calc: "stringify",
-    //                    sourceColumn: 1,
-    //                    type: "string",
-    //                    role: "annotation" },
-    //                  2]);
 
     var options = {
       title: "Tổng phòng ban",

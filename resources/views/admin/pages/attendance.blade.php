@@ -58,13 +58,13 @@
             @if(!isset($attendance))
             <form action="{{ route('admin.attendance.checkin') }}" class="checkin" method="POST">
               @csrf
-              <button type="submit" class="checkin-btn" name="checkin">Check in</button>
+              <button type="submit" class="btn btn-primary" name="checkin">Check in</button>
             </form>
             @endif
             @if(isset($attendance))
             <form action="{{ route('admin.attendance.checkout', ['id' => $attendance->id]) }}" class="checkout" method="POST">
                 @csrf
-                <button type="submit" class="checkout-btn" name="checkout">Check out</button>
+                <button type="submit" class="btn btn-primary" name="checkout">Check out</button>
             </form>
             @endif
           </div>

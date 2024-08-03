@@ -39,11 +39,6 @@ class PositionController extends Controller
             'code' => $request->code
         ])->save();
 
-        // PositionModel::create([
-        //     'name' => $request->name,
-        //     'code' => $request->code
-        // ]);
-
         $message = $result ? 'Tạo chức vụ thành công' : 'Tạo chức vụ thất bại';
 
         return redirect()->route('admin.position.index')->with('success', $message);

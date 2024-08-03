@@ -52,7 +52,9 @@
               </thead>
               <tbody>
                 <form action="{{ route('admin.department.create') }}" method="GET">
-                  <button id="add-button"  class="btn btn-insert" type="submit" style="background-color: rgb(57, 223, 57)"><i class="fa fa-plus">     Thêm phòng ban</i></button>
+                  <div class="add-position">
+                    <button id="add-button"  class="btn btn-primary" type="submit">Thêm phòng ban</button>
+                  </div>
                 </form>
                 @foreach ($departments as $index => $department)
                 <tr>

@@ -28,11 +28,11 @@
                 <td>{{ $user->address }}</td>
                 <td>{{ $user->phone }}</td>
                 <td>
-                        @if($user->status == 1)
-                            Active
-                        @else
-                            Inactive
-                        @endif     
+                    @if($user->status == 1)
+                        Active
+                    @else
+                        Inactive
+                    @endif     
                 </td>
                 <td>{{ optional($user->department)->name }}</td>
                 <td>{{ optional($user->position)->name }}</td>

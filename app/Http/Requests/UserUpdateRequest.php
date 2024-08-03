@@ -48,6 +48,7 @@ class UserUpdateRequest extends FormRequest
             'code.required' => 'Bạn chưa nhập mã nhân viên...!',
             'code.min' => 'Mã nhân viên tối thiểu 5 kí tự...!',
             'code.max' => 'Mã nhân viên tối đa 5 kí tự...!',
+            'code.unique' => 'Mã nhân viên đã tồn tại...!',
             'name.required' => 'Bạn chưa nhập Họ Tên...!',
             'name.min' => 'Tên tối thiểu 5 kí tự...!',
             'name.max' => 'Tên tối đa 255 kí tự...!',
